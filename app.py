@@ -44,8 +44,24 @@ def publish():
         return "RESULTADOS GUARDADOS"
     except Exception as e:
         return str(e)
-
 @app.route("/retrieve")
+def retrieve():
+    try:
+        # Mock data for testing
+        mock_data = [
+            {"nombre": "John Doe", "puntuacion": 5000, "fecha": "2021-07-21", "tiempo": 360},
+            {"nombre": "Jane Smith", "puntuacion": 6000, "fecha": "2021-07-22", "tiempo": 300}
+        ]
+        return json.dumps(mock_data)
+    except Exception as e:
+        return str(e), 500
+
+
+
+if __name__ == '__main__':
+   app.run()
+
+"""@app.route("/retrieve")
 def retrieve():
     try:
         conn = conectar()
@@ -54,8 +70,4 @@ def retrieve():
         cadena = cursor.fetchall()
         return json.dumps(cadena)
     except Exception as e:
-        return e
-
-if __name__ == '__main__':
-   app.run()
-
+        return e"""
