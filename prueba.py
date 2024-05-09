@@ -18,6 +18,17 @@ def conectar():
     except Exception as e:
         print("Error connecting to the database: ", e)
         return None
+def retrieve():
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM resultados")
+        cadena = cursor.fetchall()
+        print(cadena)
+        return json.dumps(cadena)
+    except Exception as e:
+        return e
 
     
 conectar()
+print(retrieve())

@@ -51,8 +51,9 @@ def retrieve():
         conn = conectar()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM resultados")
-        cadena = cursor.fetchall()
-        return json.dumps(cadena)
+        cadenas = cursor.fetchall()
+        resultados = [{"nombre": cadena[0], "puntuacion": cadena[1], "fecha": cadena[2], "tiempo": cadena[3]} for cadena in cadenas]
+        return json.dumps(resultados)
     except Exception as e:
         return e
 

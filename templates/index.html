@@ -20,26 +20,27 @@
         };
 
         const mostrarTabla = (datos) => {
-          let tabla = `<table>
-            <tr>
-              <th>Nombre</th>
-              <th onclick="ordenarPorPuntuacion()">Puntuación</th>
-              <th>Fecha</th>
-              <th>Tiempo jugado (s)</th>
-            </tr>`;
+            let tabla = `<table>
+              <tr>
+                <th>Nombre</th>
+                <th onclick="ordenarPorPuntuacion()">Puntuación</th>
+                <th>Fecha</th>
+                <th>Tiempo jugado (s)</th>
+              </tr>`;
 
-          datos.forEach(fila => {
-            tabla += `<tr>
-              <td>${fila.nombre}</td>
-              <td>${fila.puntuacion}</td>
-              <td>${fila.fecha}</td>
-              <td>${fila.tiempo}</td>
-            </tr>`;
-          });
+            datos.forEach(fila => {
+              tabla += `<tr>
+                <td>${fila.nombre}</td>
+                <td>${fila.puntuacion}</td>
+                <td>${fila.fecha}</td>
+                <td>${fila.tiempo}</td>
+              </tr>`;
+            });
 
-          tabla += '</table>';
-          document.getElementById('tabla').innerHTML = tabla;
-        };
+            tabla += '</table>';
+            document.getElementById('tabla').innerHTML = tabla;
+};
+
 
         const ordenarPorPuntuacion = () => {
           const tabla = document.querySelector('table');
