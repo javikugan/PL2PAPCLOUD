@@ -38,9 +38,7 @@ def publish():
         tiempo = request.form['tiempo']
         conn = conectar()
         cursor = conn.cursor()
-        query = "INSERT INTO resultados(nombre, puntuacion, fecha, tiempo) VALUES (?, ?, ?, ?);"
-        params = (nombre, puntuacion, fecha, tiempo)
-        cursor.execute(query, params)
+        query = f"INSERT INTO resultados(nombre, puntuacion, fecha, tiempo) VALUES ('{nombre}', '{puntuacion}', '{fecha}', '{tiempo}');"
         cursor.execute(query)
         conn.commit()
         return "RESULTADOS GUARDADOS"
