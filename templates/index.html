@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invader Leaderboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const retrieve = () => {
+          fetch('https://pl2papweb.azurewebsites.net/retrieve')
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json(); // Parsing JSON here directly
+            })
+            .then(data => mostrarTabla(data))
+            .catch(error => console.error('Error al obtener los datos:', error));
+        };
+
+        const mostrarTabla = (datos) => {
+          let tabla = `<table>
+            <tr>
+              <th>Nombre</th>
+              <th onclick="ordenarPorPuntuacion()">Puntuación</th>
+              <th>Fecha</th>
+              <th>Tiempo jugado (s)</th>
+            </tr>`;
+
+          datos.forEach(fila => {
+            tabla += `<tr>
+              <td>${fila.nombre}</td>
+              <td>${fila.puntuacion}</td>
+              <td>${fila.fecha}</td>
+              <td>${fila.tiempo}</td>
+            </tr>`;
+          });
+
+          tabla += '</table>';
+          document.getElementById('tabla').innerHTML = tabla;
+        };
+
+        const ordenarPorPuntuacion = () => {
+          const tabla = document.querySelector('table');
+          const filas = Array.from(tabla.querySelectorAll('tr:not(:first-child)')).sort((a, b) => {
+            const aPuntuacion = parseInt(a.cells[1].textContent);
+            const bPuntuacion = parseInt(b.cells[1].textContent);
+            return bPuntuacion - aPuntuacion;
+          });
+
+          filas.forEach(fila => tabla.appendChild(fila));
+        };
+
+        window.ordenarPorPuntuacion = ordenarPorPuntuacion; // Make it available globally
+        document.getElementById('actualizar').addEventListener('click', retrieve);
+      });
+    </script>
+    <style>
+        body { background-color: #f2f2f2; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        h1 { text-align: center; font-size: 32px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #4CAF50; color: white; cursor: pointer; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tr:hover { background-color: #ddd; }
+        button { background-color: #af4c4c; color: white; padding: 10px 20px; font-size: 18px; border: none; cursor: pointer; display: block; margin: 20px auto; }
+        button:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SPACE INVADER Leaderboard</h1>
+        <button id="actualizar">ACTUALIZAR</button>
+        <div id="tabla"></div>
+    </div>
+</body>
+</html>
