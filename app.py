@@ -47,16 +47,15 @@ def publish():
 
 @app.route("/retrieve")
 def retrieve():
-    """try:
+    try:
         conn = conectar()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM resultados")
         cadena = cursor.fetchall()
         return json.dumps(cadena)
     except Exception as e:
-        return e"""
-    return render_template('hello.html')
-    
+        return e
+
 if __name__ == '__main__':
    app.run()
 
